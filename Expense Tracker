@@ -1,0 +1,142 @@
+# ==========================================
+#          EXPENSE TRACKER
+# ==========================================
+
+transactions = []
+
+
+def add_income():
+    print("\n--- Add Income ---")
+
+    name = input("Enter income source: ")
+
+    try:
+        amount = float(input("Enter amount (BDT): "))
+    except ValueError:
+        print("Invalid amount! Please enter a number.")
+        return
+
+    transaction = {
+        "type": "Income",
+        "name": name,
+        "amount": amount,
+        "category": "Income"
+    }
+
+    transactions.append(transaction)
+
+    print("Income added successfully!")
+
+
+def add_expense():
+    print("\n--- Add Expense ---")
+
+    name = input("Enter expense name: ")
+
+    try:
+        amount = float(input("Enter amount (BDT): "))
+    except ValueError:
+        print("Invalid amount! Please enter a number.")
+        return
+
+    category = input("Enter category: ")
+
+    transaction = {
+        "type": "Expense",
+        "name": name,
+        "amount": amount,
+        "category": category
+    }
+
+    transactions.append(transaction)
+
+    print("Expense added successfully!")
+
+
+def view_transactions():
+    print("\n--- All Transactions ---")
+
+    if len(transactions) == 0:
+        print("No transactions found.")
+        return
+
+    print("-" * 60)
+
+    for i, transaction in enumerate(transactions, start=1):
+        print(
+            f"{i}. "
+            f"{transaction['type']} | "
+            f"{transaction['name']} | "
+            f"{transaction['category']} | "
+            f"{transaction['amount']:.2f} BDT"
+        )
+
+    print("-" * 60)
+
+
+def show_summary():
+    print("\n--- Financial Summary ---")
+
+    total_income = 0
+    total_expense = 0
+
+    for transaction in transactions:
+
+        if transaction["type"] == "Income":
+            total_income += transaction["amount"]
+
+        elif transaction["type"] == "Expense":
+            total_expense += transaction["amount"]
+
+    balance = total_income - total_expense
+
+    print("-" * 40)
+    print(f"Total Income  : {total_income:.2f} BDT")
+    print(f"Total Expense : {total_expense:.2f} BDT")
+    print(f"Balance       : {balance:.2f} BDT")
+    print("-" * 40)
+
+
+def main():
+    while True:
+
+        print("\n")
+        print("=" * 40)
+        print("          EXPENSE TRACKER")
+        print("=" * 40)
+
+        print("1. Add Income")
+        print("2. Add Expense")
+        print("3. View Transactions")
+        print("4. Show Summary")
+        print("5. Exit")
+
+        print("=" * 40)
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            add_income()
+
+        elif choice == "2":
+            add_expense()
+
+        elif choice == "3":
+            view_transactions()
+
+        elif choice == "4":
+            show_summary()
+
+        elif choice == "5":
+            print("\nThank you for using Expense Tracker!")
+            print("Goodbye!")
+            break
+
+        else:
+            print("\nInvalid choice!")
+            print("Please choose a number between 1 and 5.")
+
+
+# Start the program
+if __name__ == "__main__":
+    main()
